@@ -2,20 +2,23 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8075
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Municorn.TestTasks.Notifier.Instance/Municorn.TestTasks.Notifier.Instance.csproj", "Municorn.TestTasks.Notifier.Instance/"]
-RUN dotnet restore "Municorn.TestTasks.Notifier.Instance/Municorn.TestTasks.Notifier.Instance.csproj"
+COPY ["Sources/Municorn.TestTasks.Notifier.Instance/Instance.csproj", "Sources/Municorn.TestTasks.Notifier.Instance/"]
+COPY ["Sources/Municorn.TestTasks.Notifier.BusinessLogic/BusinessLogic.csproj", "Sources/Municorn.TestTasks.Notifier.BusinessLogic/"]
+COPY ["Sources/Municorn.TestTasks.Notifier.Data/Data.csproj", "Sources/Municorn.TestTasks.Notifier.Data/"]
+RUN dotnet restore "Sources/Municorn.TestTasks.Notifier.Instance/Instance.csproj"
 COPY . .
-WORKDIR "/src/Municorn.TestTasks.Notifier.Instance"
-RUN dotnet build "Municorn.TestTasks.Notifier.Instance.csproj" -c Release -o /app/build
+WORKDIR "/src/Sources/Municorn.TestTasks.Notifier.Instance"
+RUN dotnet build "Instance.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Municorn.TestTasks.Notifier.Instance.csproj" -c Release -o /app/publish
+RUN dotnet publish "Instance.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
+EXPOSE 8075
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Municorn.TestTasks.Notifier.Instance.dll"]
