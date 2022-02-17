@@ -2,8 +2,6 @@
 using FluentValidation;
 using HealthChecks.NpgSql;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging.Abstractions;
 using Municorn.TestTasks.Notifier.BusinessLogic.Config;
 using Municorn.TestTasks.Notifier.BusinessLogic.Contracts;

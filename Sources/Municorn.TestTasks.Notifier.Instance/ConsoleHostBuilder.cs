@@ -3,7 +3,6 @@ using Autofac.Extensions.DependencyInjection;
 using HealthChecks.NpgSql;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Municorn.TestTasks.Notifier.Instance.Web.Controllers;
-using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
